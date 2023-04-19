@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WeatherReport</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+  </head>
+
+  <body>
+    <section class="hero is-info mb-6">
+      <div class="hero-body">
+	<p class="title">Weather Report</p>
+	<p class="subtitle">Reporting The Weather In Your Area</p>
+      </div>
+    </section>
+    <%= yield %>
+  </body>
+</html>

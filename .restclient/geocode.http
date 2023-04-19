@@ -1,0 +1,3 @@
+:apikey = ""
+
+GET http://api.openweathermap.org/geo/1.0/zip?zip=97223,US&appid=:apikey
