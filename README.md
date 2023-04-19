@@ -85,3 +85,10 @@ implement due to lack of time.
 - Figure out a way to write high-value tests for controllers, as those
   would require patching in order to mock infrastructure rather than
   using dependency injection.
+- Explore using the Rails / Redis cache integration via `Rails.cache`
+  rather than using a custom singleton. I wasn't quite sure how to use
+  this as it seemed to use a different API from `Redis`, and wasn't
+  sure how to test as I was using `Miniredis`. I believe the Rails
+  version handles connection pooling which is an important
+  consideration when scaling in a production environment. The basic
+  Redis client does not manage connection pooling.
