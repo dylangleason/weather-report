@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+docker pull redis:latest
+docker build -t weather-report:latest . 

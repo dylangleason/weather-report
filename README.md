@@ -5,7 +5,24 @@ application, written using Ruby on Rails.
 
 ## Installation
 
-TODO
+This project was created using Ruby 3.0.5, so ensure that you have
+that installed before proceeding. Alternatively, you can install the
+project using the provided `Dockerfile` and associated scripts.
+
+### Docker
+
+Run the following scripts at your terminal to build and run the
+application.
+
+```command
+./bin/docker-build && ./bin/docker-run
+```
+
+You can also clean up resources Docker created when done:
+
+```command
+./bin/docker-destroy
+```
 
 ## Architecture
 

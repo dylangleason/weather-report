@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+# Create a common network if it doesn't already exist, so we don't
+# have to expose redis to the host
+if [ $(docker network ls | tail -n1 | awk '{ print $2 }') != weather-report ]; then
+    docker network create weather-report
+fi
+
+# Run the redis container
+docker run --rm -d \
+       --name redis \
+       --network weather-report \
+       redis
+
+# Run the weather-report app container
+docker run --rm -d \
+       --name weather-report \
+       --network weather-report \
+       -p 3000:3000 \
+       -e REDIS_URL=redis://weather-report:6379 \
+       weather-report
