@@ -3,19 +3,28 @@
 Weather Report is a simple weather reporting and forecasting
 application, written using Ruby on Rails.
 
-## Installation
+## Prerequisites
 
-This project was created using Ruby 3.0.5, so ensure that you have
-that installed before proceeding. Alternatively, you can install the
-project using the provided `Dockerfile` and associated scripts.
+This project was created using Ruby 3.0.5 and also utilizes Redis for
+caching, so ensure that you have that installed before proceeding if
+running from your host environment. Alternatively, you can install the
+project using the provided `Dockerfile` and associated scripts
+(recommended).
 
-### Docker
+## Environment
+
+This project utilizes data from
+[OpenWeather](https://openweathermap.org/api) APIs. Make sure to
+export your `OPENWEATHER_API_KEY` to your environment prior to running
+the web server, either via Docker or on your host.
+
+## Running the Dev Server
 
 Run the following scripts at your terminal to build and run the
 application.
 
 ```command
-./bin/docker-build && ./bin/docker-run
+./bin/docker-run
 ```
 
 You can also clean up resources Docker created when done:
@@ -45,19 +54,7 @@ Redis is used as a cache to store data temporarily to avoid repeated
 lookups to the OpenWeather service. Cache keys are a unique zipcode
 with a TTL of 30 minutes.
 
-## Testing
-
-Things you may want to cover:
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-## Discussion
+## Approach
 
 - Due to the UI requirement, and to keep things simple, I elected to
   render views via a Rails `Base` Controller, rather than defining a
@@ -73,3 +70,18 @@ Things you may want to cover:
   possible since we don't require any request filters. I chose not to
   go this route, though, since this strategy could change if using an
   API controller.
+
+## Areas of Improvement
+
+Here are a few areas that could use improvement, but I did not
+implement due to lack of time.
+
+- Spend more time on error handling when OpenWeather or their related
+  Geocoder service is down or rate limited.
+- I used some prebuilt components using Bulma CSS to build a very
+  simple / rudimentary UI. This could be improved.
+- Consider configuring autoload or eager load paths to clean up
+  inclusion of `lib` directory services.
+- Figure out a way to write high-value tests for controllers, as those
+  would require patching in order to mock infrastructure rather than
+  using dependency injection.
