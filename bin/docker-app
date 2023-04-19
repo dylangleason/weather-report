@@ -1,0 +1,9 @@
+#!/bin/sh
+
+docker run --rm -d \
+       --name weather-report \
+       --network weather-report \
+       -p 3000:3000 \
+       -e REDIS_HOST=redis \
+       -e OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY} \
+       weather-report

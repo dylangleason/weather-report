@@ -1,4 +1,12 @@
+require "#{Rails.root}/lib/infra/geocoder"
+require "#{Rails.root}/lib/infra/weather"
+
 class WeatherController < ApplicationController
+  include Infra
+
+  rescue_from GeocoderAPIError, with: :geocoder_error
+  rescue_from WeatherAPIError, with: :weather_error
+
   ##
   # Handle a request to render the main application view, including an
   # input form where the user can enter their zipcode.
@@ -12,8 +20,20 @@ class WeatherController < ApplicationController
   # request.
   #
   def show
-    # TODO: implement
-    logger.debug params[:zipcode]
-    render json: { "temp" => 43 }
+    weather_service = ApplicationHelper.create_weather_service
+    result = weather_service.current_weather(params[:zipcode])
+    render json: result
+  end
+
+  private
+
+  def geocoder_error
+    # TODO respond with an informative message indicating that
+    # geocoding services are unavailable
+  end
+
+  def weather_error
+    # TODO respond with an informative message indicating that weather
+    # services are temporarily unavailable.
   end
 end

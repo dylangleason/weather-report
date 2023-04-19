@@ -1,4 +1,6 @@
 module Weather
+  TemperatureData = Struct.new(:current, :high, :low, :cached)
+
   ##
   # WeatherService provides services for querying weather data based on zipcode.
   #
@@ -22,20 +24,48 @@ module Weather
     #
     def current_weather(zipcode)
       result = @cache.hgetall(zipcode)
-      return result unless result.empty?
+      return from_cache(result) unless result.empty?
 
       latlon = @geocoder_api.geocode_from_zipcode(zipcode)
-      weather = @weather_api.current_weather(latlon[:lat], latlon[:lon])
+      weather = @weather_api.current_weather(latlon["lat"], latlon["lon"])
+      temps = from_api(weather)
 
       # Set the hash value for the weather data
-      cache_weather(zipcode, weather)
-      weather
+      cache_temps(zipcode, temps)
+      temps
     end
 
     private
 
-    def cache_weather(zipcode, weather)
-      @cache.hset(zipcode, weather)
+    def from_api(weather)
+      temps = weather["main"]
+      TemperatureData.new(
+        temps["temp"],
+        temps["temp_max"],
+        temps["temp_min"],
+        false
+      )
+    end
+
+    def from_cache(temps)
+      TemperatureData.new(
+        temps["current"].to_f,
+        temps["high"].to_f,
+        temps["low"].to_f,
+        true
+      )
+    end
+
+    def cache_temps(zipcode, temps)
+      @cache.hmset(
+        zipcode,
+        "current",
+        temps.current,
+        "high",
+        temps.high,
+        "low",
+        temps.low
+      )
       @cache.expire(zipcode, CACHE_EXPIRATION_SECONDS)
     end
   end

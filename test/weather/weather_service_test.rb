@@ -14,19 +14,37 @@ describe WeatherService do
     @geocoder_api = Minitest::Mock.new
     @weather_service = WeatherService.new(@cache, @weather_api, @geocoder_api)
 
-    @expected_result = { "temp" => "43" }
+    @expected_response = {
+      "main" => {
+        "temp" => 43.2,
+        "temp_max" => 48.5,
+        "temp_min" => 37.0
+      }
+    }
+
+    @expected_result = TemperatureData.new(43.2, 48.5, 37.0)
 
     lat = 37.33
     lon = -122.01
     @geocoder_api.expect :geocode_from_zipcode,
-                         { lat: lat, lon: lon },
+                         { "lat" => lat, "lon" => lon },
                          [@zipcode]
-    @weather_api.expect :current_weather, @expected_result, [lat, lon]
+    @weather_api.expect :current_weather, @expected_response, [lat, lon]
   end
 
   describe "#current_weather" do
     describe "given a zipcode stored in cache" do
-      before { @cache.hset(@zipcode, @expected_result) }
+      before do
+        @cache.hmset(
+          @zipcode,
+          "current",
+          @expected_result.current,
+          "high",
+          @expected_result.high,
+          "low",
+          @expected_result.low
+        )
+      end
 
       it "then do not query the geocoder API" do
         @weather_service.current_weather(@zipcode)
@@ -40,7 +58,9 @@ describe WeatherService do
 
       it "then return data stored in cache" do
         data = @weather_service.current_weather(@zipcode)
-        expect(data).must_equal(@expected_result)
+        cached_struct = @expected_result.clone
+        cached_struct.cached = true
+        expect(data).must_equal(cached_struct)
       end
     end
 
@@ -55,10 +75,11 @@ describe WeatherService do
         @weather_api.verify
       end
 
-      it "then store the value in cache for later" do
-        @weather_service.current_weather(@zipcode)
-        data = @cache.hgetall(@zipcode)
-        expect(data).must_equal(@expected_result)
+      it "then return data from API" do
+        data = @weather_service.current_weather(@zipcode)
+        uncached_struct = @expected_result.clone
+        uncached_struct.cached = false
+        expect(data).must_equal(uncached_struct)
       end
     end
   end

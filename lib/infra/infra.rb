@@ -12,7 +12,7 @@ module Infra
       end
       JSON.parse(res.body)
     else
-      raise klass.new("error returned with code #{code}")
+      raise klass.new("error returned with code #{res.code}")
     end
   end
 end
