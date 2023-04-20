@@ -88,9 +88,13 @@ implement due to lack of time.
   simple, but rudimentary UI. This could definitely be improved upon
   by implementing input validation and other error handling, better
   animations, icons, etc.
-- Consider configuring autoload or eager load paths to clean up
-  inclusion of `lib` directory services, as the various `require`
-  statements are a little bit messy.
+- I was really struggling to understand how autoloading worked in
+  Rails 7. I first added my code to `lib`, then I moved my files to
+  `app/lib` after reading that this was the recommend practice.
+  Despite doing so, I could not at all get Rails to resolve my module
+  or class names and just encountered `NameError`. It's been a few
+  years since I've worked in Rails, and I see autoloading hasn't
+  gotten any easier...
 - Add integration or end-to-end tests. I focused mostly on writing
   unit tests for the `WeatherService`, which was straightforward to do
   as I used dependency injection to mock out dependencies to
