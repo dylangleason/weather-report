@@ -1,9 +1,9 @@
 <div class="field has-addons m-6">
   <div class="control">
-    <input class="input" type="text" placeholder="Enter Your Zipcode">
+    <input id="zip" class="input" type="text" placeholder="Enter Your Zipcode">
   </div>
   <div class="control">
-    <a class="button is-primary">
+    <a class="button is-primary" onclick="zipSearch()">
       Get Report
     </a>
   </div>
@@ -13,18 +13,18 @@
   <div class="tile is-parent">
     <article class="tile is-child notification is-info">
       <p class="title">Current Temperature</p>
-      <div class="content temp-font pt-auto">0&deg;</div>
+      <div class="content temp-font pt-auto"><span id="current">0</span>&deg;F</div>
     </article>
   </div>
 
   <div class="tile is-parent is-vertical">
     <article class="tile is-child notification is-primary">
       <p class="title">High Temperature</p>
-      <div class="content temp-font">0&deg;</div>
+      <div class="content temp-font"><span id="high">0</span>&deg;F</div>
     </article>
     <article class="tile is-child notification is-warning">
       <p class="title">Low Temperature</p>
-      <div class="content temp-font">0&deg;</div>
+      <div class="content temp-font"><span id="low">0</span>&deg;F</div>
     </article>
     </article>
   </div>
