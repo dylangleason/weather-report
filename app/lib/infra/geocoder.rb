@@ -2,7 +2,7 @@ require "uri"
 require "net/http"
 
 module Infra
-  class GeocoderAPIError < StandardError
+  class GeocoderError < StandardError
   end
 
   class GeocoderAPI
@@ -21,7 +21,7 @@ module Infra
     def geocode_from_zipcode(zipcode, country_code = "US")
       uri = URI("#{HOSTNAME}?zip=#{zipcode},#{country_code}&appid=#{@api_key}")
       res = Net::HTTP.get_response(uri)
-      Infra.handle_response(res, GeocoderAPIError)
+      Infra.handle_response(res, GeocoderError)
     end
   end
 end

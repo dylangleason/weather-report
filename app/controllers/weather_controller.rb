@@ -1,11 +1,8 @@
-require "#{Rails.root}/lib/infra/geocoder"
-require "#{Rails.root}/lib/infra/weather"
-
 class WeatherController < ApplicationController
   include Infra
 
-  rescue_from GeocoderAPIError, with: :geocoder_error
-  rescue_from WeatherAPIError, with: :weather_error
+  rescue_from GeocoderError, with: :geocoder_error
+  rescue_from WeatherError, with: :weather_error
 
   ##
   # Handle a request to render the main application view, including an

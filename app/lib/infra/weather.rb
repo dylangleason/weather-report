@@ -2,7 +2,7 @@ require "uri"
 require "net/http"
 
 module Infra
-  class WeatherAPIError < StandardError
+  class WeatherError < StandardError
   end
 
   ##
@@ -11,7 +11,7 @@ module Infra
   # TODO: consider using a Singleton instance and set to the lifecycle
   # of the application so that we can rate limit requests.
   #
-  class WeatherAPI
+  class WeatherApi
     HOSTNAME = "https://api.openweathermap.org/data/2.5/weather"
 
     ##
@@ -26,9 +26,12 @@ module Infra
     # +lon+. Note that units for results are specified in imperial
     # units. If the response is not successful, raise an error.
     def current_weather(lat, lon)
-      uri = URI("#{HOSTNAME}?lat=#{lat}&lon=#{lon}&units=imperial&appid=#{@api_key}")
+      uri =
+        URI(
+          "#{HOSTNAME}?lat=#{lat}&lon=#{lon}&units=imperial&appid=#{@api_key}"
+        )
       res = Net::HTTP.get_response(uri)
-      Infra.handle_response(res, WeatherAPIError)
+      Infra.handle_response(res, WeatherError)
     end
   end
 end
