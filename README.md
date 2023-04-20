@@ -106,6 +106,11 @@ implement due to lack of time.
   [connection_pool](https://github.com/mperham/connection_pool)
   library that wraps the underlying functionality, which may also be
   worth exploring.
+- Similar to Redis connection pools, implement a persistent HTTP
+  client and use a singleton instance in the application to improve
+  HTTP request performance. It seems there is a library that follows
+  the `Net::HTTP` API closely that supports persistent connections
+  [here](https://github.com/drbrain/net-http-persistent).
 - ~~Add a `docker-compose.yml` file to orchestrate Docker local
   development scripts more cleanly. Support hot reloading in the
   `Dockerfile` to shorten development loop.~~
