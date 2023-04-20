@@ -20,17 +20,11 @@ the web server, either via Docker or on your host.
 
 ## Running the Dev Server
 
-Run the following scripts at your terminal to build and run the
-application.
+A `docker-compose.yml` file has been included to make running the dev
+services as easy as possible:
 
 ```command
-./bin/docker-run
-```
-
-You can also clean up resources Docker created when done:
-
-```command
-./bin/docker-destroy
+docker-compose up -d
 ```
 
 ## Running the Tests
@@ -108,6 +102,6 @@ implement due to lack of time.
   connection pooling, but there is a connection_pool library that
   wraps the underlying functionality, which may also be worth
   exploring.
-- Add a `docker-compose.yml` file to orchestrate Docker local
+- ~~Add a `docker-compose.yml` file to orchestrate Docker local
   development scripts more cleanly. Support hot reloading in the
-  `Dockerfile` to shorten development loop.
+  `Dockerfile` to shorten development loop.~~
