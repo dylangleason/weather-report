@@ -79,7 +79,9 @@ implement due to lack of time.
 - Spend more time on error handling when OpenWeather or their related
   Geocoder service is down or rate limited.
 - I used some prebuilt components using Bulma CSS to build a very
-  simple / rudimentary UI. This could be improved.
+  simple / rudimentary UI. This could definitely be improved with
+  input validation and other error handling, better animations, icons,
+  etc. My frontend skills are a bit limited...
 - Consider configuring autoload or eager load paths to clean up
   inclusion of `lib` directory services.
 - Figure out a way to write high-value tests for controllers, as those
