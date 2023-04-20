@@ -9,6 +9,11 @@ module ApplicationHelper
 
   def self.create_weather_service()
     api_key = ENV["OPENWEATHER_API_KEY"]
+
+    if api_key.nil? || api_key.empty?
+      raise ArgumentError.new("OpenWeather API key is missing")
+    end
+
     geocode_api = GeocoderAPI.new(api_key)
     weather_api = WeatherAPI.new(api_key)
     Weather::WeatherService.new(REDIS, weather_api, geocode_api)
