@@ -33,6 +33,14 @@ You can also clean up resources Docker created when done:
 ./bin/docker-destroy
 ```
 
+## Running the Tests
+
+Tests can be run, also via Docker:
+
+```command
+docker run -it --rm weather-report bundle exec rake test
+```
+
 ## Architecture
 
 The weather report uses a very simple layered architecture and uses
@@ -84,9 +92,13 @@ implement due to lack of time.
   etc. My frontend skills are a bit limited...
 - Consider configuring autoload or eager load paths to clean up
   inclusion of `lib` directory services.
-- Figure out a way to write high-value tests for controllers, as those
-  would require patching in order to mock infrastructure rather than
-  using dependency injection.
+- I focused on writing unit tests for the business logic, but I didn't
+  have enough time to figure out a way to write high-value tests for
+  controllers, as those would require patching in order to mock
+  infrastructure rather than using dependency injection. I figured the
+  value there was limited from a testing standpoint relative to
+  testing the feature end-to-end via the web interface. Some postman
+  tests could also be useful for testing the one API request.
 - Explore using the Rails / Redis cache integration via `Rails.cache`
   rather than using a custom singleton. I wasn't quite sure how to use
   this as it seemed to use a different API from `Redis`, and wasn't
