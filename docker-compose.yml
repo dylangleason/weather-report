@@ -8,13 +8,13 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ./config/redis/data:/data
+      - ./tmp/redis/data:/data
 
   app:
     container_name: weather-report
     build:
       context: .
-      dockerfile: Dockerfile
+    image: weather-report
     environment:
       REDIS_HOST: redis
       OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY:-replaceme}
