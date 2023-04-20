@@ -17,7 +17,8 @@ module Infra
     ##
     # Create an instance of the WeatherAPI given an +api_key+ for
     # authorizing requests.
-    def initialize(api_key)
+    def initialize(client, api_key)
+      @client = client
       @api_key = api_key
     end
 
@@ -26,8 +27,11 @@ module Infra
     # +lon+. Note that units for results are specified in imperial
     # units. If the response is not successful, raise an error.
     def current_weather(lat, lon)
-      uri = URI("#{HOSTNAME}?lat=#{lat}&lon=#{lon}&units=imperial&appid=#{@api_key}")
-      res = Net::HTTP.get_response(uri)
+      uri =
+        URI(
+          "#{HOSTNAME}?lat=#{lat}&lon=#{lon}&units=imperial&appid=#{@api_key}"
+        )
+      res = @client.request(uri)
       Infra.handle_response(res, WeatherAPIError)
     end
   end

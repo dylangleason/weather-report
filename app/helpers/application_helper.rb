@@ -14,8 +14,8 @@ module ApplicationHelper
       raise ArgumentError.new("OpenWeather API key is missing")
     end
 
-    geocode_api = GeocoderAPI.new(api_key)
-    weather_api = WeatherAPI.new(api_key)
+    geocode_api = GeocoderAPI.new(HTTP_CLIENT, api_key)
+    weather_api = WeatherAPI.new(HTTP_CLIENT, api_key)
     Weather::WeatherService.new(REDIS, weather_api, geocode_api)
   end
 end
