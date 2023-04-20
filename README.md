@@ -62,8 +62,8 @@ with a TTL of 30 minutes.
   render the main view via a Rails `Base` Controller, rather than
   defining a web API using the `API` Controller and writing a separate
   client app (e.g. using React).
-- I encapsulated domain models and business logic in the as services
-  classes in the `lib` directory in order to limit coupling with Rails
+- I encapsulated domain models and business logic as a service class
+  in the `lib` directory, in order to limit coupling with Rails
   infrastructure. By doing so, we can reuse domain logic in the
   context of a web API more easily in the future, and it also makes
   our domain services easier to test.
@@ -81,10 +81,13 @@ implement due to lack of time.
   error handler methods using `rescue_from` but did not implement
   them. This could provide more useful error reporting for client
   apps.
+- Support search for a full or partial address in the input, rather
+  than just a zipcode. This would likely require use of another
+  third-party API.
 - I used some prebuilt components using Bulma CSS to build a very
   simple, but rudimentary UI. This could definitely be improved upon
-  input validation and other error handling, better animations, icons,
-  etc.
+  by implementing input validation and other error handling, better
+  animations, icons, etc.
 - Consider configuring autoload or eager load paths to clean up
   inclusion of `lib` directory services, as the various `require`
   statements are a little bit messy.
@@ -97,11 +100,12 @@ implement due to lack of time.
   closely resemble the Weather APIs might also make this more robust.
 - Configure connection pools for Redis using the builtin Rails cache
   wrapper. I wasn't quite sure how to use this as it seemed to use a
-  different API than `Redis` or `Miniredis`, so I wasn't sure how to
-  use it in a test environment. The basic Redis client does not manage
-  connection pooling, but there is a connection_pool library that
-  wraps the underlying functionality, which may also be worth
-  exploring.
+  different API than `Redis` or `Miniredis`, which made it unclear how
+  to mock or stub in a test environment. The basic Redis client does
+  not manage connection pooling, but there is a
+  [connection_pool](https://github.com/mperham/connection_pool)
+  library that wraps the underlying functionality, which may also be
+  worth exploring.
 - ~~Add a `docker-compose.yml` file to orchestrate Docker local
   development scripts more cleanly. Support hot reloading in the
   `Dockerfile` to shorten development loop.~~
