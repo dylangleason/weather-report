@@ -1,9 +1,0 @@
-#!/bin/sh
-set -e
-
-# download / build images
-docker pull redis:latest
-docker build -t weather-report:latest . 
-
-# create a shared network for redis and app
-docker network create weather-report

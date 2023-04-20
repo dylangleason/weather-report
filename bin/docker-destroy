@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-docker kill redis
-docker kill weather-report
-docker network rm weather-report

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-docker run --rm -d \
-       --name redis \
-       --network weather-report \
-       -p 6379:6379 \
-       redis

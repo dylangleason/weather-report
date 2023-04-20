@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-./bin/docker-build
-./bin/docker-redis
-./bin/docker-app

@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./config/redis/data:/data
+
+  app:
+    container_name: weather-report
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      REDIS_HOST: redis
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY:-replaceme}
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+
+networks:
+  default:
+    name: weather-report

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-docker run --rm -it \
-       --name rails-console \
-       --network weather-report \
-       -e REDIS_URL=redis://weather-report:6379 \
-       weather-report \
-       bundle exec rails console
