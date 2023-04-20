@@ -65,44 +65,49 @@ with a TTL of 30 minutes.
 ## Approach
 
 - Due to the UI requirement, and to keep things simple, I elected to
-  render views via a Rails `Base` Controller, rather than defining a
-  web API using the `API` Controller and writing a separate client app
-  (e.g. using React).
-- However, I encapsulated domain models and business logic in the as
-  services classes in the `lib` directory in order to limit coupling
-  with Rails infrastructure. By doing so, we can reuse domain logic in
-  the context of a web API more easily in the future, and it also
-  makes our domain services easier to test.
-- I chose to implement caching response data to OpenWeather queries
-  rather than caching pages or view fragments, but the latter is
-  possible since we don't require any request filters. I chose not to
-  go this route, though, since this strategy could change if using an
-  API controller.
+  render the main view via a Rails `Base` Controller, rather than
+  defining a web API using the `API` Controller and writing a separate
+  client app (e.g. using React).
+- I encapsulated domain models and business logic in the as services
+  classes in the `lib` directory in order to limit coupling with Rails
+  infrastructure. By doing so, we can reuse domain logic in the
+  context of a web API more easily in the future, and it also makes
+  our domain services easier to test.
+- I chose to cache response data to OpenWeather queries rather than
+  caching pages or view fragments, but the latter is possible since we
+  don't require any request filters. I chose not to go this route,
+  though, since this strategy could change if using an API controller.
 
 ## Areas of Improvement
 
 Here are a few areas that could use improvement, but I did not
 implement due to lack of time.
 
-- Spend more time on error handling when OpenWeather or their related
-  Geocoder service is down or rate limited.
+- Improve error handling on the backend. I added stubs for custom
+  error handler methods using `rescue_from` but did not implement
+  them. This could provide more useful error reporting for client
+  apps.
 - I used some prebuilt components using Bulma CSS to build a very
-  simple / rudimentary UI. This could definitely be improved with
+  simple, but rudimentary UI. This could definitely be improved upon
   input validation and other error handling, better animations, icons,
-  etc. My frontend skills are a bit limited...
+  etc.
 - Consider configuring autoload or eager load paths to clean up
-  inclusion of `lib` directory services.
-- I focused on writing unit tests for the business logic, but I didn't
-  have enough time to figure out a way to write high-value tests for
-  controllers, as those would require patching in order to mock
-  infrastructure rather than using dependency injection. I figured the
-  value there was limited from a testing standpoint relative to
-  testing the feature end-to-end via the web interface. Some postman
-  tests could also be useful for testing the one API request.
-- Explore using the Rails / Redis cache integration via `Rails.cache`
-  rather than using a custom singleton. I wasn't quite sure how to use
-  this as it seemed to use a different API from `Redis`, and wasn't
-  sure how to test as I was using `Miniredis`. I believe the Rails
-  version handles connection pooling which is an important
-  consideration when scaling in a production environment. The basic
-  Redis client does not manage connection pooling.
+  inclusion of `lib` directory services, as the various `require`
+  statements are a little bit messy.
+- Add integration or end-to-end tests. I focused mostly on writing
+  unit tests for the `WeatherService`, which was straightforward to do
+  as I used dependency injection to mock out dependencies to
+  infrastructure. A controller test would probably be well suited
+  toward an end-to-end test, but would require using Minitest stubs
+  rather than dependency injection. Using fake services that more
+  closely resemble the Weather APIs might also make this more robust.
+- Configure connection pools for Redis using the builtin Rails cache
+  wrapper. I wasn't quite sure how to use this as it seemed to use a
+  different API than `Redis` or `Miniredis`, so I wasn't sure how to
+  use it in a test environment. The basic Redis client does not manage
+  connection pooling, but there is a connection_pool library that
+  wraps the underlying functionality, which may also be worth
+  exploring.
+- Add a `docker-compose.yml` file to orchestrate Docker local
+  development scripts more cleanly. Support hot reloading in the
+  `Dockerfile` to shorten development loop.
