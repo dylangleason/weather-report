@@ -11,7 +11,8 @@ module Infra
     ##
     # Create an instance of the GeocoderAPI given an +api_key+ for
     # authorizing requests.
-    def initialize(api_key)
+    def initialize(client, api_key)
+      @client = client
       @api_key = api_key
     end
 
@@ -20,7 +21,7 @@ module Infra
     # (defaults to US), or raise an error.
     def geocode_from_zipcode(zipcode, country_code = "US")
       uri = URI("#{HOSTNAME}?zip=#{zipcode},#{country_code}&appid=#{@api_key}")
-      res = Net::HTTP.get_response(uri)
+      res = @client.request(uri)
       Infra.handle_response(res, GeocoderAPIError)
     end
   end

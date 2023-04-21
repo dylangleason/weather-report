@@ -99,6 +99,8 @@ GEM
     minitest (5.18.0)
     mock_redis (0.36.0)
       ruby2_keywords
+    net-http-persistent (4.0.2)
+      connection_pool (~> 2.2)
     net-imap (0.3.4)
       date
       net-protocol
@@ -177,6 +179,7 @@ DEPENDENCIES
   bulma-rails (~> 0.9.0)
   debug
   mock_redis (~> 0.36.0)
+  net-http-persistent (~> 4.0)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   redis (~> 5.0)
