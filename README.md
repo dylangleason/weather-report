@@ -95,13 +95,14 @@ implement due to lack of time.
   or class names and just encountered `NameError`. It's been a few
   years since I've worked in Rails, and I see autoloading hasn't
   gotten any easier...
-- Add integration or end-to-end tests. I focused mostly on writing
+- ~~Add integration or end-to-end tests. I focused mostly on writing
   unit tests for the `WeatherService`, which was straightforward to do
   as I used dependency injection to mock out dependencies to
   infrastructure. A controller test would probably be well suited
   toward an end-to-end test, but would require using Minitest stubs
   rather than dependency injection. Using fake services that more
-  closely resemble the Weather APIs might also make this more robust.
+  closely resemble the Weather APIs might also make this more
+  robust.~~
 - Configure connection pools for Redis using the builtin Rails cache
   wrapper. I wasn't quite sure how to use this as it seemed to use a
   different API than `Redis` or `Miniredis`, which made it unclear how
