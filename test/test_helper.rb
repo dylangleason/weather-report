@@ -1,4 +1,6 @@
 ENV["RAILS_ENV"] ||= "test"
+ENV["OPENWEATHER_API_KEY"] ||= "fakeapikey"
+
 require_relative "../config/environment"
 require "rails/test_help"
 

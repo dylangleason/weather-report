@@ -28,12 +28,20 @@ class WeatherController < ApplicationController
   private
 
   def geocoder_error
-    # TODO respond with an informative message indicating that
-    # geocoding services are unavailable
+    render(
+      json: {
+        error: "geocoder API unavailable"
+      },
+      status: :service_unavailable
+    )
   end
 
   def weather_error
-    # TODO respond with an informative message indicating that weather
-    # services are temporarily unavailable.
+    render(
+      json: {
+        error: "weather API unavailable"
+      },
+      status: :service_unavailable
+    )
   end
 end
